@@ -1,16 +1,13 @@
 // import dependancis 
 import 'dotenv/config';
 import getweb3 from './utils/web3'
-import { getPriceFromExchange } from '../utils/priceFetcher';
+import { getPriceFromExchange } from './utils/priceFetcher';
 
-// intialize web 3
-
+// intialize web3
 const web3 = getweb3();
 const contractAddress = process.env.CONTRACT_ADDRESS;
 
-
 // create a contrace instance 
-
 const contract = new web3.eth.contract(contractABI, contractAddress);
 
 // function for arbitrage logic
@@ -18,14 +15,13 @@ async function performArbitrage () {
     try {
         const account = await web3.eth.getaccount();
         const owner = account[0];
-        const priceonSecondaryMarket = await getpriceFromExchange();
+        const priceonSecondaryMarket = await getPriceFromExchange();
 
         if (priceonSecondaryMarket > 1 ){
             // Arbitrage Opportunity Found Mint and Sell
             await mintDollarToken(owner);
             await sellDollarToken(priceonSecondaryMarket, owner);
         }
-
         else if (priceonSecondaryMarket < 1){
             // Arbitrage Opportunity Found Buy and Redeem Dollar Token
             await buyDollarToken(priceonSecondaryMarket, owner)
@@ -33,7 +29,7 @@ async function performArbitrage () {
         } else {
             console.log('No arbitrage opportunity Found.')
         }
-        
+
     } catch (error){
         console.error('Error in arbitrage excution:', error);
     }
