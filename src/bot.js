@@ -109,6 +109,27 @@ async function buyDollarToken(price, account){
 }
 
 // Impliment a function to redeenDollartoken 
+async function redeemDollarToken(account){
+    try {
+        const redeem = contract.methods.redeem();
+        const gas = await redeem.estimateGas({from: account});
+        const gasPrice = await web3.eth.getGasPrice();
+        const data = redeem.encodeABI();
+        const nonce = await web3.eth.getTransactionCount(account);
+
+        const tx = {
+            to: contractAddress,
+            data,
+            gas,
+            gasPrice,
+            nonce,
+        };
+        const receipt = await sendtransaction(tx, process.env.PRIVATE_KEY);
+        console.log('Redeem transaction successful:', receipt);
+    }
+    catch (error){
+        console.error('Redeeming error:', error);
+}
 
 // execute the bot 
 
