@@ -1,5 +1,6 @@
 // Import dependencies
 import 'dotenv/config';
+import axios from 'axios';
 import getweb3 from '../utils/web3';
 import { getPriceFromExchange } from '../utils/priceFetcher';
 import { sendTransaction } from '../utils/Transaction';
