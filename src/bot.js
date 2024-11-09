@@ -84,6 +84,29 @@ async function sellDollarToken(price, account){
     }
 }
 // Impliment BuyDollar Token function 
+async function buyDollarToken(price, account){
+    try {
+        const buy = contract.methods.buy(price);
+        const gas = await buy.estimateGas({from: account});
+        const gasPrice = await web3.eth.getGasPrice();
+        const data = buy.encodeABI();
+        const nonce = await web3.eth.getTransactionCount(account);
+
+        const tx = {
+            to: contractAddress,
+            data,
+            gas,
+            gasPrice,
+            nonce,
+        };
+        const receipt = await sendtransaction(tx, process.env.PRIVATE_KEY);
+        console.log('Buy transaction successful:', receipt);
+    }
+
+    catch (error){
+        console.error('Buying error:', error);
+    }
+}
 
 // Impliment a function to redeenDollartoken 
 
