@@ -130,6 +130,5 @@ async function redeemDollarToken(account) {
         console.error('Redeeming error:', error);
     }
 }
-
 // Execute the bot
 setInterval(performArbitrage, 30000); // Run every 30 seconds

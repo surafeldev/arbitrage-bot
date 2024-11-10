@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="dashboard-header">
+      <h1> Ubiquity Arbitrage Bot </h1>
+    </div>
+    <div class="dashboard-body">
+      <div class="dashboard-section">
+        <h2>Bot Progress</h2>
+        <progress id="progressBar" value="0" max="100"></progress>
+      </div>
+      <div class="dashboard-section">
+        <h2>Real-Time Price</h2>
+        <div id="realTimePrice" class="box">Loading...</div>
+      </div>
+      <div class="dashboard-section">
+        <h2>Buy and Sell for Dollar Token</h2>
+        <div id="buySell" class="box">Loading...</div>
+      </div>
+      <div class="dashboard-section">
+        <h2>Arbitrage Opportunities</h2>
+        <ul id="arbitrageList" class="box"></ul>
+      </div>
+    </div>
+    
+    <script type="module" src="dist/dashboard.js"></script>
+    <script>
+      // Simulate bot progress
+      const progressBar = document.getElementById('progressBar');
+      let progress = 0;
+
+      const interval = setInterval(() => {
+        progress += 10;
+        progressBar.value = progress;
+
+        if (progress >= 100) {
+          clearInterval(interval);
+        }
+      }, 1000);
+
+      // Simulate real-time price update
+      const realTimePrice = document.getElementById('realTimePrice');
+      setInterval(() => {
+        realTimePrice.textContent = `$${(Math.random() * 100).toFixed(2)}`;
+      }, 2000);
+
+      // Simulate bot performance update
+      const botPerformance = document.getElementById('botPerformance');
+      setInterval(() => {
+        botPerformance.textContent = `Performance: ${(Math.random() * 100).toFixed(2)}%`;
+      }, 3000);
+
+      // Simulate buy/sell update
+      const buySell = document.getElementById('buySell');
+      setInterval(() => {
+        buySell.textContent = `Buy: ${(Math.random() * 100).toFixed(2)} | Sell: ${(Math.random() * 100).toFixed(2)}`;
+      }, 4000);
+
+      // Simulate arbitrage opportunities
+      const arbitrageList = document.getElementById('arbitrageList');
+      setInterval(() => {
+        const priceOnSecondaryMarket = (Math.random() * 100).toFixed(2);
+        const priceOnLibUbiquityPool = (Math.random() * 100).toFixed(2);
+
+        if (priceOnSecondaryMarket > priceOnLibUbiquityPool) {
+          const listItem = document.createElement('li');
+          listItem.textContent = `Arbitrage Opportunity: Buy at $${priceOnLibUbiquityPool} and Sell at $${priceOnSecondaryMarket}`;
+          arbitrageList.appendChild(listItem);
+        } else if (priceOnSecondaryMarket < priceOnLibUbiquityPool) {
+          const listItem = document.createElement('li');
+          listItem.textContent = `Arbitrage Opportunity: Buy at $${priceOnSecondaryMarket} and Redeem at $${priceOnLibUbiquityPool}`;
+          arbitrageList.appendChild(listItem);
+        }
+      }, 5000);
+    </script>
+  </body>
+</html>
